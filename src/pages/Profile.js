@@ -70,7 +70,7 @@ const {name, email} = formData
     <div className="profileCard">
       <form >
         <input type="text" id='name' className={!changeDetails?'profileName' : 'profileNameActive'} disabled={!changeDetails} autoComplete='on' value={name} onChange = {onChange} />
-        <input type="text" id='name' autoComplete='on' className={!changeDetails?'profileEmail' : 'profileEmailActive'} disabled={!changeDetails} value={email} onChange = {onChange} />
+        <input type="email" id='email' autoComplete='on' className={!changeDetails?'profileEmail' : 'profileEmailActive'} disabled={true} value={email} onChange = {onChange} />
       </form>
     </div>
   </div>
