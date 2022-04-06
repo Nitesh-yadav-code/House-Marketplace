@@ -12,7 +12,8 @@ import {
 import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
 import Spinner from '../components/Spinner'
-import Listing from '../components/Listing'
+import Listing from '../components/ListingItem'
+import ListingItem from '../components/ListingItem'
 
 function Offer() {
   const [listings, setListings] = useState(null)
@@ -49,7 +50,7 @@ function Offer() {
      
      
       } catch (error) {
-        toast.error('Could not fetch stings')
+        toast.error('Could not fetch Listings')
       }
     }
    
@@ -69,7 +70,7 @@ function Offer() {
           <ul className="categoryListings">
             {listings.map((listing)=>(
               <>
-                <Listing  key={listing.id} listing={listing.data} id={listing.id} />
+                <ListingItem  key={listing.id} listing={listing.data} id={listing.id} />
               </>
                
       ))}

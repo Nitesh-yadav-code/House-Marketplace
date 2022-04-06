@@ -3,7 +3,10 @@ import { getAuth, updateProfile} from "firebase/auth";
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase.config';
 import {useNavigate, Link} from 'react-router-dom'
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
+import arrowRightIcon from '../assets/svg/keyboardArrowRightIcon.svg'
+import homeIcon from '../assets/svg/homeIcon.svg'
+
 
 function Profile() {
 const navigate = useNavigate()
@@ -65,7 +68,7 @@ const {name, email} = formData
          setchangeDetails((prevState)=> !prevState)
        }}>{changeDetails? 'done': 'change'}</p>
      </div>
-    </main>
+   
 
     <div className="profileCard">
       <form >
@@ -73,6 +76,12 @@ const {name, email} = formData
         <input type="email" id='email' autoComplete='on' className={!changeDetails?'profileEmail' : 'profileEmailActive'} disabled={true} value={email} onChange = {onChange} />
       </form>
     </div>
+    <Link to= '/create-listing'  className='createListing' >
+      <img src={homeIcon} alt="home" />
+      <p>Sell or rent your home</p>
+      <img src={arrowRightIcon} alt="arrowRight" />
+    </Link>
+    </main>
   </div>
 }
 
