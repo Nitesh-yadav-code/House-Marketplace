@@ -4,9 +4,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar';
 import PrivateRouter from './components/PrivateRouter';
 import Category from './pages/Category';
+import Contact from './pages/Contact';
 import CreateListing from './pages/CreateListing';
 import Explore from './pages/Explore';
 import ForgotPassword from './pages/ForgotPassword';
+import Listing from './pages/Listing';
 import Offer from './pages/Offer';
 import Profile from './pages/Profile';
 import SignIn from './pages/SignIn';
@@ -29,6 +31,8 @@ function App() {
          <Route path='/sign-up' element={<SignUp/>} />
          <Route path='/forgot-password' element={<ForgotPassword/>} />
          <Route path='/create-listing' element={<CreateListing />} />
+         <Route path='/category/:categoryName/:listingId' element={<Listing />} />
+         <Route path='/contact/:listingId/:listingName' element={<Contact/>} />
        </Routes>
        <Navbar/>
      </Router>
