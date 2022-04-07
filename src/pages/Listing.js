@@ -28,7 +28,6 @@ function Listing() {
 
         if(docSnap.exists){
             setListing(docSnap.data())
-            console.log(docSnap.data());
             setLoading(false)
         }
 
