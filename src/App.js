@@ -32,7 +32,7 @@ function App() {
          <Route path='/forgot-password' element={<ForgotPassword/>} />
          <Route path='/create-listing' element={<CreateListing />} />
          <Route path='/category/:categoryName/:listingId' element={<Listing />} />
-         <Route path='/contact/:listingId/:listingName' element={<Contact/>} />
+         <Route path='/contact/:landlordId' element={<Contact/>} />
        </Routes>
        <Navbar/>
      </Router>
