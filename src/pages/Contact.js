@@ -3,7 +3,6 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import { getDoc, doc } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
-import { async } from '@firebase/util'
 
 
 function Contact() {
