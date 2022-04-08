@@ -67,17 +67,6 @@ function Slider() {
                     </Swiper>
                 </>
             )}
-
-            {/* <Swiper slidesPerView={1} pagination={{ clickable: true }} >
-    {listing.imgUrls.map((url, index)=>(
-        <SwiperSlide key={index}>
-        <div className="swiperSlideDiv" style={{background: `url(${listing.imgUrls[index]}) center no-repeat`, backgroundSize:'cover'}} >
-
-        </div>
-      </SwiperSlide>
-    ))}
-
-   </Swiper> */}
         </div>
     )
 }

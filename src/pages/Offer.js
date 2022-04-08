@@ -12,12 +12,12 @@ import {
 import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
 import Spinner from '../components/Spinner'
-import Listing from '../components/ListingItem'
 import ListingItem from '../components/ListingItem'
 
 function Offer() {
   const [listings, setListings] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [lastFetchListing, setLastFetchListing] = useState(null)
 
 
   useEffect(() => {
@@ -36,6 +36,8 @@ function Offer() {
         
         // Execute query
         const querySnap = await getDocs(q)
+        const lastVisible = querySnap.docs[querySnap.docs.length-1]
+          setLastFetchListing(lastVisible)
 
 
         const list = []
@@ -56,6 +58,47 @@ function Offer() {
    
     fetchListings()
   }, [])
+
+
+  //Pagination/ Load More
+  const onFetchMoreListings = async () => {
+    try {
+      // Get reference
+      const listingsRef = collection(db, 'listing')
+
+      // Create a query
+      const q = query(
+        listingsRef,
+        where('offer', '==', true),
+        orderBy('timestamp', 'desc'),
+        startAfter(lastFetchListing),
+        limit(10)
+      )
+      
+      // Execute query
+      const querySnap = await getDocs(q)
+
+      const lastVisible = querySnap.docs[querySnap.docs.length-1]
+        setLastFetchListing(lastVisible)
+
+      const list = []
+      querySnap.forEach((doc) => {
+        return list.push({
+          id: doc.id,
+          data : doc.data()
+        })
+      })
+      setListings((prevState)=>[...prevState, ...list] )
+      // console.log(list); 
+      setLoading(false)
+   
+   
+    } catch (error) {
+      toast.error('Could not fetch stings')
+    }
+  }
+ 
+
   return (
     <div className='category'>
       <header>
@@ -77,6 +120,11 @@ function Offer() {
      
           </ul>
         </main>
+        <br />
+        <br />
+        {lastFetchListing && (
+          <p className="loadMore" onClick={onFetchMoreListings} >Load More</p>
+        )}
       </>) : (<p>There are no current offers  </p>) }
     </div>
   )

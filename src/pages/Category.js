@@ -17,6 +17,7 @@ import ListingItem from '../components/ListingItem'
 function Category() {
   const [listings, setListings] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [lastFetchListing, setLastFetchListing] = useState(null)
 
   const params = useParams()
 
@@ -37,6 +38,8 @@ function Category() {
         // Execute query
         const querySnap = await getDocs(q)
 
+        const lastVisible = querySnap.docs[querySnap.docs.length-1]
+          setLastFetchListing(lastVisible)
 
         const list = []
         querySnap.forEach((doc) => {
@@ -57,6 +60,48 @@ function Category() {
    
     fetchListings()
   }, [params.categoryName])
+
+
+  //Pagination/ Load More
+  const onFetchMoreListings = async () => {
+    try {
+      // Get reference
+      const listingsRef = collection(db, 'listing')
+
+      // Create a query
+      const q = query(
+        listingsRef,
+        where('type', '==', params.categoryName),
+        orderBy('timestamp', 'desc'),
+        startAfter(lastFetchListing),
+        limit(10)
+      )
+      
+      // Execute query
+      const querySnap = await getDocs(q)
+
+      const lastVisible = querySnap.docs[querySnap.docs.length-1]
+        setLastFetchListing(lastVisible)
+
+      const list = []
+      querySnap.forEach((doc) => {
+        return list.push({
+          id: doc.id,
+          data : doc.data()
+        })
+      })
+      setListings((prevState)=>[...prevState, ...list] )
+      // console.log(list); 
+      setLoading(false)
+   
+   
+    } catch (error) {
+      toast.error('Could not fetch stings')
+    }
+  }
+ 
+
+
   return (
     <div className='category'>
       <header>
@@ -79,6 +124,11 @@ function Category() {
      
           </ul>
         </main>
+        <br />
+        <br />
+        {lastFetchListing && (
+          <p className="loadMore" onClick={onFetchMoreListings} >Load More</p>
+        )}
       </>) : (<p> No listing for {params.categoryName}</p>) }
     </div>
   )
